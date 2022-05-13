@@ -41,7 +41,7 @@ let button = document.createElement('button');
     div1.append(div2);
     div1.append(div3);
     header.prepend(div1);
-    document.body.append(header);
+    document.body.prepend(header);
     button.insertAdjacentHTML("beforeend", `<img src="/books-shop/assets/icons/search.svg" alt="lens">`);
     div3.insertAdjacentHTML("beforeend", `<img src="/books-shop/assets/icons/shopping-cart.svg" alt="cart">`);
   
@@ -58,3 +58,31 @@ let button = document.createElement('button');
 
 //   div.className = "bag-header";
 //   header.appendChild(div);
+
+// main block
+let main = document.createElement('main');
+let mainSection = document.createElement('section');
+let sortingDiv = document.createElement('div');
+// let sortUl = document.createElement('ul');
+
+          
+
+mainSection.className = "container main-container";
+sortingDiv.className = "sort-main";
+var sortArr = ["A-z", "Price", "Popular"];
+
+for (let i = 0; i < sortArr.length; i++) {
+    let sortLink = document.createElement('a');
+    sortLink.className = "sort-item";
+    sortLink.setAttribute("href", "#");
+    sortLink.setAttribute("data-value", sortArr[i]);
+    sortingDiv.appendChild(sortLink);
+    sortLink.innerHTML=sortLink.innerHTML + sortArr[i];
+}
+    sortingDiv.insertAdjacentHTML("afterbegin", `<span><strong>Sort by:</strong></span>`);
+    mainSection.prepend(sortingDiv);
+    main.prepend(mainSection);
+    document.body.append(main);
+
+    
+
