@@ -1,15 +1,3 @@
-let BooksData = [];
-fetch('./books.json') //path to the file with json data
-        .then(response => {
-            return response.json();
-        })
-        .then(data => {
-            // console.log(data);
-            BooksData = data.map(a => {return {...a}});
-            console.log(BooksData);
-        });
-
-console.log(BooksData); // output 'testing'
 
 let header = document.createElement('header');
 let div1 = document.createElement('div');
@@ -18,7 +6,6 @@ let div3 = document.createElement('div');
 let h1 = document.createElement('h1');
 let input = document.createElement('input');
 let button = document.createElement('button');
-// let img = document.createElement('img');
 
     div1.className = "container header-container";
     div2.className = "search-header";
@@ -44,32 +31,16 @@ let button = document.createElement('button');
     document.body.prepend(header);
     button.insertAdjacentHTML("beforeend", `<img src="/books-shop/assets/icons/search.svg" alt="lens">`);
     div3.insertAdjacentHTML("beforeend", `<img src="/books-shop/assets/icons/shopping-cart.svg" alt="cart">`);
-  
-  
-  
-//  let input = `<input type="search" id="book-search">`;
-//  let button = `<button class="lens-search"></button>`;
-
-//   header.insertAdjacentHTML("beforeend", `<div class="search-header">
-//     ${input}${button}
-//   </div>`);
-//   header.insertAdjacentHTML("beforeend", `<div class="bag-header">
-//   </div>`);
-
-//   div.className = "bag-header";
-//   header.appendChild(div);
 
 // main block
+    // sorting
 let main = document.createElement('main');
 let mainSection = document.createElement('section');
 let sortingDiv = document.createElement('div');
-// let sortUl = document.createElement('ul');
-
-          
-
+var sortArr = ["A-z", "Price", "Popular"];
+       
 mainSection.className = "container main-container";
 sortingDiv.className = "sort-main";
-var sortArr = ["A-z", "Price", "Popular"];
 
 for (let i = 0; i < sortArr.length; i++) {
     let sortLink = document.createElement('a');
@@ -84,5 +55,32 @@ for (let i = 0; i < sortArr.length; i++) {
     main.prepend(mainSection);
     document.body.append(main);
 
-    
+    // catalog
+let catalogDiv = document.createElement('div');
+catalogDiv.className = "catalog-items";
 
+fetch('./books.json')
+        .then(response => {
+            return response.json();
+        })
+        .then(data => {
+            for (let i = 0; i < data.length; i++) {
+                console.log(data[i].imageLink);
+                let itemDiv = document.createElement('div');
+                itemDiv.className = "item";
+                itemDiv.id = `i-${i}`;
+                itemDiv.insertAdjacentHTML("beforeend", `<img class="cover" alt="cover" src=${data[i].imageLink}>`);
+                itemDiv.insertAdjacentHTML("beforeend", `<h3 class="title">${data[i].title}</h3>`);
+                itemDiv.insertAdjacentHTML("beforeend", `<h4 class="author">${data[i].author}</h4>`);
+                itemDiv.insertAdjacentHTML("beforeend", `<h2 class="price">${data[i].price}$</h2>`);
+                let cartButton = document.createElement('button');
+                cartButton.className = "to-cart";
+                itemDiv.append(cartButton);
+                catalogDiv.appendChild(itemDiv);
+            }
+        });
+
+mainSection.append(catalogDiv);
+
+
+// footer
