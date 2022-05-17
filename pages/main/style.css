@@ -1,3 +1,22 @@
+:root {
+  /* --gradient: linear-gradient(to bottom right, #5B483A, #262425); */
+  --color-primary: #f6eee0;
+  --color-dark: #003060;
+  --color-brown: #a47551;
+  --color-red: #e55b13;
+  --roboto: 'Roboto Slab', serif;
+  --color-primary-dark: #e9dccb; 
+  
+  /* --color-dark-m: #B2B2B2;
+  --color-dark-l: #545454;
+  --color-dark-xl: #4C4C4C;
+  --color-dark-3xl: #292929;
+  --color-light-s: #FAFAFA;
+  --color-light-l: #F6F6F6;
+  --color-light-xl: #FFFFFF;
+  --georgia: "Georgia", serif;  */
+}
+
 html {
   scroll-behavior: smooth; 
 }
@@ -15,7 +34,7 @@ body {
   }
 
 header {
-    background-color: aqua;
+    background-color: var(--color-primary);
 }
 .container {
     position: relative;
@@ -29,34 +48,146 @@ header {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    padding-top: 60px;
+    padding-top: 40px;
+    /* position: sticky; */
+}
+.logo {
+  display: flex;
+  justify-content: flex-start;
+  gap: 20px;
+}
+.logo-img {
+  width: 60px;
+}
+h1 {
+  color: var(--color-dark);
+  font-family: var(--roboto);
+  font-weight: 500;
+  font-size: 44px;
+  line-height: 130%;
+  letter-spacing: 0.06em;
+  margin-bottom: 20px;
+}
+.menu-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
 }
 .search-header {
-    height: 40px;
+    /* height: 40px; */
     display: flex;
     justify-content: center;
     align-items: center;
+    border-radius: 20px;
+    /* border: 1px solid var(--color-primary-dark); */
+    /* box-shadow: 0 0 10px var(--color-primary-dark); */
 }
 #book-search {
-    width: 500px;
-    height: 40px;
+    width: 400px;
+    height: 50px;
     border: 0;
     padding: 0;
+    padding-left: 20px;
+    border-radius: 10px 0 0 10px;
+    border: 1px solid var(--color-primary-dark);
+    box-shadow: 0 0 10px var(--color-primary-dark);
+}
+#book-search::placeholder{
+  /* margin-left: 20px; */
+  font-family: var(--roboto);
+  font-weight: 400;
+  color: var(--color-brown);
+  line-height: 160%;
 }
 .lens-search {
-    background: greenyellow;
-    padding: 0;
-    width: 40px;
-    height: 40px;
+    background: var(--color-red);
+    color: var(--color-primary);
+    padding: 0 20px;
+    /* width: 60px; */
+    height: 50px;
     border: 0;
+    cursor: pointer;
+    border-radius: 0 10px 10px 0;
+    box-shadow: 0 0 10px var(--color-primary-dark);
+    /* border: 1px solid var(--color-primary-dark); */
 }
-.lens-search > img {
-    margin: 0;
-    width: 40px;
-    height: 40px;
-}
+
 .cart-header > img{
     width: 40px;
     height: 40px;
     cursor: pointer;
+}
+
+.home-section {
+  background: radial-gradient(circle at 50% -350%, var(--color-primary) 95%, #ffffff 50%);
+}
+.home-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+blockquote {
+  font-family: var(--roboto);
+  font-weight: 400;
+  color: var(--color-brown);
+  line-height: 160%;
+}
+figcaption {
+  font-family: var(--roboto);
+  font-weight: 400;
+  color: var(--color-dark);
+  line-height: 160%;
+}
+
+
+.catalog-items {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  /* gap: 10px; */
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.item {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    justify-content: flex-start;
+    align-items: center;
+    border-radius: 9px;
+    padding-bottom: 30px;
+    cursor: pointer;
+    padding: 20px, 40px;
+    width: 270px;
+}
+.item:hover {
+  /* background-color: grey; */
+  /* border: 1px solid grey; */
+  box-shadow: 0px 0px 5px grey;
+}
+.cover {
+  width: 200px;
+  height: 260px;
+}
+
+
+.to-cart {
+  background-image: url('/books-shop/assets/icons/shopping-cart.svg');
+  background-color: aqua;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: 50%;  
+    transition: 0.5s;
+    width: 155px;
+    height: 55px;
+    /* padding: 10px, 20px; */
+    /* margin-left: 20px;
+    margin-top: 20px; */
+    cursor: pointer;
+    border: 0;
+}
+.to-cart:hover {
+  filter: invert(100%);
 }
