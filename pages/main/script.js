@@ -106,8 +106,8 @@ fetch('./books.json')
                 itemDiv.id = `i-${i}`;
                 // itemDiv.setAttribute("onclick", showmodal(i));
                 // document.getElementById(`i-${i}`).onclick = showmodal(i);
+                itemDiv.insertAdjacentHTML("beforeend", `<div id=link-${i} class="show-more"><img class="img-eye" src="/books-shop/assets/icons/eye2.png" alt="show more"></div>`);
                 itemDiv.insertAdjacentHTML("beforeend", `<img class="cover" alt="cover" src=${data[i].imageLink}>`);
-                itemDiv.insertAdjacentHTML("beforeend", `<div id=link-${i} class="show-more"><img src="/books-shop/assets/icons/eye.png" alt="show more"></div>`);
                 itemDiv.insertAdjacentHTML("beforeend", `<h3 class="title">${data[i].title}</h3>`);
                 itemDiv.insertAdjacentHTML("beforeend", `<h4 class="author">${data[i].author}</h4>`);
                 let priceCart = document.createElement('div');
@@ -126,18 +126,37 @@ fetch('./books.json')
 
                 document.getElementById(`link-${i}`).addEventListener("click", showmodal);
 
+                let cardDiv = document.createElement('div');
+                    cardDiv.className = "card";
+                    cardDiv.insertAdjacentHTML("afterbegin", `<img class="cover-card" alt="cover" src=${data[i].imageLink}>`);
+                let contentDiv = document.createElement('div');
+                    contentDiv.className = "card-content";
+                    contentDiv.insertAdjacentHTML("beforeend", `<h3 class="title-card">${data[i].title}</h3>`);
+                    contentDiv.insertAdjacentHTML("beforeend", `<h4 class="author-card">${data[i].author}</h4>`);
+                    let priceCart2 = document.createElement('div');
+                priceCart2.className = "price-cart-item price-cart-item-card";
+                priceCart2.insertAdjacentHTML("afterbegin", `<h2 class="price">${data[i].price}$</h2>`);
+                let cartButton2 = document.createElement('button');
+                cartButton2.className = "add-to-cart";
+                cartButton2.innerHTML = "Add";
+
+                priceCart2.append(cartButton2);
+
+                    contentDiv.append(priceCart2);
+                cardDiv.append(contentDiv);
                 let popupDiv = document.createElement('div');
                     popupDiv.id = `pop-${i}`;
                     popupDiv.className = "modal";
-                    popupDiv.insertAdjacentHTML("afterbegin", `<h2 class="description">${data[i].title}</h2>`);
-                    popupDiv.insertAdjacentHTML("beforeend", `<h3 class="description">${data[i].description}</h3>`);
+                    // popupDiv.insertAdjacentHTML("afterbegin", `<h2 class="description">${data[i].title}</h2>`);
+                    popupDiv.insertAdjacentHTML("beforeend", `<h3 class="description-card">${data[i].description}</h3>`);
                     // popupDiv.insertAdjacentHTML("beforeend", `<button class="close">Close</button>`);
                     itemDiv.append(popupDiv);
                 let close = document.createElement("span");
                     close.className = "modal-js-close";
                     close.id = `${i}`;
                     close.innerHTML = "x";
-                
+
+                popupDiv.prepend(cardDiv);
                 popupDiv.append(close);
                 
 
