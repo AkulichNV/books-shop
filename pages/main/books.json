@@ -71,7 +71,7 @@
     {
       "author": "Marijn Haverbeke",
       "imageLink": "/books-shop/assets/images/Eloquent_JavaScript.jpg",
-      "title": "Eloquent JavaScript, 3rd Edition: A Modern Introduction to Programming",
+      "title": "Eloquent JavaScript: A Modern Introduction to Programming",
       "price": 21,
       "description": "This much anticipated and thoroughly revised third edition of Eloquent JavaScript dives deep into the JavaScript language to show you how to write beautiful, effective code. It has been updated to reflect the current state of JavaScript and web browsers and includes brand-new material on features like class notation, arrow functions, iterators, async functions, template strings, and block scope. A host of new exercises have also been added to test your skills and keep you on track."
     },
