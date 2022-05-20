@@ -1,4 +1,6 @@
 
+let container = document.createElement('div');
+
 let header = document.createElement('header');
 let div1 = document.createElement('div');
 let navDiv = document.createElement('div');
@@ -36,9 +38,9 @@ let button = document.createElement('button');
     // navDiv.append(div2);
     navDiv.append(div3);
     header.prepend(div1);
-    document.body.prepend(header);
+    container.prepend(header);
     // button.insertAdjacentHTML("beforeend", `<img src="/books-shop/assets/icons/search.svg" alt="lens">`);
-    div3.insertAdjacentHTML("beforeend", `<img src="/books-shop/assets/icons/shopping-cart.png" alt="cart">`);
+    div3.insertAdjacentHTML("beforeend", `<a href= "/books-shop/pages/cart/index.html"><img class="cart-header-img" src="/books-shop/assets/icons/shopping-cart.png" alt="cart"></a>`);
 
 // main block
     // home
@@ -65,7 +67,7 @@ homeDiv.append(girlDiv);
 homeSection.append(div2);
 homeSection.prepend(homeDiv);
 main.prepend(homeSection);
-document.body.append(main);
+container.append(main);
 
 
     // sorting
@@ -93,6 +95,41 @@ mainSection.className = "container main-container";
     // catalog
 let catalogDiv = document.createElement('div');
 catalogDiv.className = "catalog-items";
+// localStorage.removeItem("cart");
+var cart = {
+    items : {}, // Current items in cart
+
+    save : function () {
+      localStorage.setItem("cart", JSON.stringify(cart.items));
+    },
+  
+    load : function () {
+      cart.items = localStorage.getItem("cart");
+      if (cart.items == null) { cart.items = {}; }
+      else { cart.items = JSON.parse(cart.items); }
+    },
+
+    nuke : function () {
+        if (confirm("Empty cart?")) {
+          cart.items = {};
+          localStorage.removeItem("cart");
+        }
+      },
+
+    add : function (id) {
+        
+        if (cart.items[id] == undefined) {
+            cart.items[id] = 1;
+        } else {
+            cart.items[id]++;
+        }
+        cart.save();
+        
+        console.log(id);
+        console.log(this.items);
+    }
+};
+cart.nuke();
 
 fetch('./books.json')
         .then(response => {
@@ -112,7 +149,7 @@ fetch('./books.json')
                 itemDiv.insertAdjacentHTML("beforeend", `<h4 class="author">${data[i].author}</h4>`);
                 let priceCart = document.createElement('div');
                 priceCart.className = "price-cart-item";
-                priceCart.insertAdjacentHTML("afterbegin", `<h2 class="price">${data[i].price}$</h2>`);
+                priceCart.insertAdjacentHTML("afterbegin", `<h2 class="price">$${data[i].price}</h2>`);
                 // let showButton = document.createElement('button');
                 // showButton.className = "show-more";
                 // showButton.innerHTML = "Show more";
@@ -135,10 +172,11 @@ fetch('./books.json')
                     contentDiv.insertAdjacentHTML("beforeend", `<h4 class="author-card">${data[i].author}</h4>`);
                     let priceCart2 = document.createElement('div');
                 priceCart2.className = "price-cart-item price-cart-item-card";
-                priceCart2.insertAdjacentHTML("afterbegin", `<h2 class="price">${data[i].price}$</h2>`);
+                priceCart2.insertAdjacentHTML("afterbegin", `<h2 class="price">$${data[i].price}</h2>`);
                 let cartButton2 = document.createElement('button');
                 cartButton2.className = "add-to-cart";
-                cartButton2.innerHTML = "Add";
+                cartButton2.innerHTML = "Add to Cart";
+                document.getElementById(`i-${i}`).getElementsByClassName('add-to-cart')[0].addEventListener("click", addToCart);
 
                 priceCart2.append(cartButton2);
 
@@ -216,13 +254,28 @@ function modalOnOff(id) {
 }
 
 function showmodal()  {
-    modalOnOff(this.id); // show
+    modalOnOff(this.id);
+}
+
+function addToCart() {
+    var idEl = this.parentElement.parentElement.id;
+    var numId = parseInt(idEl.match(/\d+/));
+    cart.load();
+    cart.add(idEl);
+    // var cart = localStorage.getItem("cart");
+    // console.log(crt);
+    // var cart = [];
     
-    // modal(`pop-${i}`); // show
-    // modaloff(`pop-${i}`); // hide
+    // cart.push(numId);
+    // localStorage.setItem("cart", cart);
+    
+
+    // console.log(cart);
 }
 
 mainSection.append(catalogDiv);
+
+
 
 
 // footer
@@ -238,4 +291,6 @@ footerSection.className = "container footer-container";
 footerSection.insertAdjacentHTML("afterbegin", `<p class="git-footer">@May 2022 <a href="https://github.com/AkulichNV">AkulichNV</a></p>`);
 footerSection.insertAdjacentHTML("beforeend", `<a href="https://rs.school/js-en/" target="_blank"><img class="img-footer" src="/books-shop/assets/icons/rs_school_js.png" alt="rsschool" ></a>`);
 footer.append(footerSection);
-document.body.append(footer);
+container.append(footer);
+
+document.body.append(container);
