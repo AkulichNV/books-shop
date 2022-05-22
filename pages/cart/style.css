@@ -153,3 +153,6 @@ h2 {
   input:valid {
     border: 2px solid black;
   }
+  .order-form {
+      display: none;
+  }

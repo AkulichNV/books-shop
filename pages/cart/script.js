@@ -136,7 +136,8 @@ var cart = {
     },
     checkout : function () {
         // AAPEAR ORDER FORM
-        alert("TO DO");
+        document.getElementsByClassName("order-form")[0].style.display = "block";
+        document.getElementsByClassName("c-checkout")[0].style.display = "none";
       }
 
 };
@@ -227,6 +228,15 @@ h2.innerHTML = `Shopping Cart`;
 titleDiv.append(h2);
 mainDiv.prepend(titleDiv);
 
+
+//shopping cart content
+let cartDiv = document.createElement('div');
+cartDiv.className = "cart-items";
+//fetch
+cart.list();
+
+mainDiv.append(cartDiv);
+
 // ORDER FORM
 let formDiv = document.createElement('div');
 formDiv.className = "form-header";
@@ -236,17 +246,9 @@ var formHtml = document.querySelector('.order-form');
 formDiv.appendChild(formHtml);
 mainDiv.append(formDiv);
 
-
-
-//shopping cart content
-let cartDiv = document.createElement('div');
-cartDiv.className = "cart-items";
-//fetch
-cart.list();
-
-mainDiv.append(cartDiv);
 main.prepend(mainDiv);
 container.append(main);
+
 
 
 //footer
@@ -260,9 +262,8 @@ footerDiv.insertAdjacentHTML("beforeend", `<a href="https://rs.school/js-en/" ta
 footer.append(footerDiv);
 container.append(footer);
 
-document.body.append(container);
 
-// var doc = document.getElementsByClassName("detailsInput");
+
 
 function isValid() {
     let inputs = document.getElementsByClassName("detailsInput");
@@ -290,6 +291,41 @@ addEv();
 updateValue();
 
 function updateValue(e) {
-    console.log(isValid());
+    // console.log(isValid());
     completeBtn.disabled = !isValid();
 }
+
+
+
+function postAlert() {
+    let inputs = document.getElementsByClassName("detailsInput");
+    let arrData = [];
+    for (let i=0; i< inputs.length; i++) {
+        let elem = inputs[i];
+        // console.log(elem);
+        arrData.push(elem.value);
+    }
+    var post = `The order created!\nThe delivery will be carried out on ${arrData[2]} at the address of ${arrData[3]} street, house ${arrData[4]} flat ${arrData[5]}. Customer ${arrData[0]} ${arrData[1]}.\nHave a nice day!`
+    // alert(post);
+    // cart.nuke;
+    if(confirm(post)) {
+        cart.nuke;
+    }
+    
+}
+
+
+completeBtn.addEventListener("click", postAlert); 
+
+
+
+
+
+
+
+
+
+
+
+
+document.body.append(container);
