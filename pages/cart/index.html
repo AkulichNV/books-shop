@@ -6,8 +6,59 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script type="module" src="script.js"></script>
     <title>Cart JSworm</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="/books-shop/assets/icons/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;500&display=swap" rel="stylesheet"> 
 </head>
 <body>
-    
+    <div class="order-form">
+    <form method="post" action="/Tests/Post">
+        <h3>Order Form</h3>
+        <p>
+            <label for="t1">Name<abbr title="This field is mandatory" aria-label="required">*</abbr></label>
+            <input type="text" class="detailsInput" id="t1" name="name" required  minlength="5" pattern="[a-zA-Z]+">
+        </p>
+        <p>
+            <label for="t2">Surname<abbr title="This field is mandatory" aria-label="required">*</abbr></label>
+            <input type="text" class="detailsInput" id="t2" name="surname" required  minlength="4" pattern="[a-zA-Z]+">
+        </p>
+        <p>
+            <label for="t3">Delivery<abbr title="This field is mandatory" aria-label="required">*</abbr></label>
+            <input type="date" class="detailsInput" id="t3" name="delivery" required>
+        </p>
+        <p>
+            <label for="t4">Street<abbr title="This field is mandatory" aria-label="required">*</abbr></label>
+            <input type="text" class="detailsInput" id="t4" name="street" required  minlength="5" pattern="[a-zA-Z0-9][a-zA-Z0-9-( )]+">
+        </p>
+        <p>
+            <label for="t5">House number<abbr title="This field is mandatory" aria-label="required">*</abbr></label>
+            <input type="text" class="detailsInput" id="t5" name="house" required pattern="[1-9][0-9]*">
+        </p>
+        <p>
+            <label for="t6">Flat number<abbr title="This field is mandatory" aria-label="required">*</abbr></label>
+            <input type="text" class="detailsInput" id="t6" name="flat" required pattern="[1-9][0-9]*(-[1-9][0-9]*)*">
+        </p>
+        <p>
+          <fieldset>
+            <legend>Choose the payment type<abbr title="This field is mandatory" aria-label="required">*</abbr></legend>
+            <input type="radio" required name="payment" id="r1" value="cash" checked><label for="r1">Cash</label>
+            <input type="radio" required name="payment" id="r2" value="card"><label for="r2">Card</label>
+          </fieldset>
+        </p>
+        <fieldset>      
+            <legend>Choose 2 gifts:</legend>      
+            <input type="checkbox" name="gift" id="g1" value="pack">Pack as a gift<br>      
+            <input type="checkbox" name="gift" id="g2" value="postcard">Add postcard<br>      
+            <input type="checkbox" name="gift" id="g3" value="discount">Provide 2% discount to the next time<br>
+            <input type="checkbox" name="gift" id="g4" value="pen"> Branded pen<br>       
+            <input type="checkbox" name="gift" id="g5" value="pencil"> Branded pencil<br>       
+        </fieldset>   
+        <p>
+          <button id="complete-btn">Complete order</button>
+        </p>
+      </form>
+    </div>
 </body>
 </html>

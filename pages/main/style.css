@@ -1,20 +1,10 @@
 :root {
-  /* --gradient: linear-gradient(to bottom right, #5B483A, #262425); */
   --color-primary: #f6eee0;
   --color-dark: #003060;
   --color-brown: #a47551;
   --color-red: #e55b13;
   --roboto: 'Roboto Slab', serif;
   --color-primary-dark: #e9dccb; 
-  
-  /* --color-dark-m: #B2B2B2;
-  --color-dark-l: #545454;
-  --color-dark-xl: #4C4C4C;
-  --color-dark-3xl: #292929;
-  --color-light-s: #FAFAFA;
-  --color-light-l: #F6F6F6;
-  --color-light-xl: #FFFFFF;
-  --georgia: "Georgia", serif;  */
 }
 
 html {
@@ -35,6 +25,9 @@ body {
 
 header {
     background-color: var(--color-primary);
+    position: fixed;
+    width: 100%;
+    z-index: 100;
 }
 .container {
     position: relative;
@@ -48,8 +41,8 @@ header {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    padding-top: 40px;
-    /* position: sticky; */
+    padding-top: 15px;
+    padding-bottom: 15px;
 }
 .logo {
   display: flex;
@@ -127,13 +120,14 @@ h1 {
 
 .home-section {
   background: radial-gradient(circle at 50% -400%, var(--color-primary) 95%, #ffffff 50%);
+  padding-top: 80px;
 }
 .home-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
   /* padding-top: 20px; */
-  padding-bottom: 30px;
+  /* padding-bottom: 30px; */
 }
 .quote-content {
   width: 450px;

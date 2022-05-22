@@ -19,7 +19,7 @@ let button = document.createElement('button');
 
     // h1.className = "title-header";
     // h1.innerHTML = `JSworm \<br> Collection`;
-    logoDiv.insertAdjacentHTML("afterbegin", `<img class="logo-img" src="/books-shop/assets/images/bookworm.png" alt="bookworm-logo">`);
+    logoDiv.insertAdjacentHTML("afterbegin", `<a href="#"><img class="logo-img" src="/books-shop/assets/icons/bookworm.png" alt="bookworm-logo"></a>`);
 
     input.id = "book-search";
     input.setAttribute("type", "search");
@@ -129,7 +129,7 @@ var cart = {
         console.log(this.items);
     }
 };
-cart.nuke();
+// cart.nuke();
 
 fetch('./books.json')
         .then(response => {
