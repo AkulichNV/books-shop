@@ -17,8 +17,6 @@ let button = document.createElement('button');
     div3.className = "cart-header";
     logoDiv.className = "logo";
 
-    // h1.className = "title-header";
-    // h1.innerHTML = `JSworm \<br> Collection`;
     logoDiv.insertAdjacentHTML("afterbegin", `<a href="#"><img class="logo-img" src="/books-shop/assets/icons/bookworm.png" alt="bookworm-logo"></a>`);
 
     input.id = "book-search";
@@ -33,13 +31,10 @@ let button = document.createElement('button');
     div2.prepend(input);
     div2.append(button);
     div1.prepend(logoDiv)
-    // logoDiv.append(h1);
     div1.append(navDiv);
-    // navDiv.append(div2);
     navDiv.append(div3);
     header.prepend(div1);
     container.prepend(header);
-    // div3.insertAdjacentHTML("beforeend", `<img src="/books-shop/assets/icons/search.svg" alt="lens">`);
     div3.insertAdjacentHTML("beforeend", `<a href= "/books-shop/pages/cart/index.html"><div class="widget"><p id="itm-cnt">0</p></div><img class="cart-header-img" ondragover="Window.allowDrop(event)" ondrop="Window.drop(event)" id="cart-img" src="/books-shop/assets/icons/shopping-cart.png" alt="cart"></a>`);
 
 // main block
@@ -147,9 +142,7 @@ var cart = {
             cart.items[id]++;
         }
         cart.save();
-        
-        // console.log(id);
-        // console.log(this.items);
+
         document.getElementById("itm-cnt").textContent = cart.count();
 
     },
@@ -161,7 +154,6 @@ var cart = {
         return n;
     }
 };
-// cart.nuke();
 
 fetch('./books.json')
         .then(response => {
@@ -169,12 +161,11 @@ fetch('./books.json')
         })
         .then(data => {
             for (let i = 0; i < data.length; i++) {
-                // console.log(data[i].imageLink);
+                
                 let itemDiv = document.createElement('div');
                 itemDiv.className = "item";
                 itemDiv.id = `i-${i}`;
-                // itemDiv.setAttribute("onclick", showmodal(i));
-                // document.getElementById(`i-${i}`).onclick = showmodal(i);
+                
                 itemDiv.insertAdjacentHTML("beforeend", `<div id=link-${i} class="show-more"><img class="img-eye" src="/books-shop/assets/icons/eye2.png" alt="show more"></div>`);
                 itemDiv.insertAdjacentHTML("beforeend", `<img id=img-${i} draggable="true" ondragstart="Window.drag(event)" class="cover" alt="cover" src=${data[i].imageLink}>`);
                 itemDiv.insertAdjacentHTML("beforeend", `<h3 class="title">${data[i].title}</h3>`);
@@ -182,13 +173,10 @@ fetch('./books.json')
                 let priceCart = document.createElement('div');
                 priceCart.className = "price-cart-item";
                 priceCart.insertAdjacentHTML("afterbegin", `<h2 class="price">$${data[i].price}</h2>`);
-                // let showButton = document.createElement('button');
-                // showButton.className = "show-more";
-                // showButton.innerHTML = "Show more";
+                
                 let cartButton = document.createElement('button');
                 cartButton.className = "add-to-cart";
                 cartButton.innerHTML = "Add";
-                // priceCart.append(showButton);
                 priceCart.append(cartButton);
                 itemDiv.append(priceCart);
                 catalogDiv.appendChild(itemDiv);
@@ -217,9 +205,8 @@ fetch('./books.json')
                 let popupDiv = document.createElement('div');
                     popupDiv.id = `pop-${i}`;
                     popupDiv.className = "modal";
-                    // popupDiv.insertAdjacentHTML("afterbegin", `<h2 class="description">${data[i].title}</h2>`);
+                    
                     popupDiv.insertAdjacentHTML("beforeend", `<h3 class="description-card">${data[i].description}</h3>`);
-                    // popupDiv.insertAdjacentHTML("beforeend", `<button class="close">Close</button>`);
                     itemDiv.append(popupDiv);
                 let close = document.createElement("span");
                     close.className = "modal-js-close";
@@ -243,11 +230,9 @@ function modalOnOff(id) {
     popEl.classList.add("on");
     let body = document.querySelector("body");
     let close = popEl.querySelector(".modal-js-close");
-    // let overlay = body.querySelector(".modal-js-overlay");
     let bg = document.createElement("div");
     bg.className = "modal-js-overlay";
     console.log(close);
-    // bg.innerHTML = popId;
     body.appendChild(bg);
     bg.addEventListener("click", (e) => { 
         body.removeChild(bg);

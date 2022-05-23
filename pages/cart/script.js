@@ -325,12 +325,6 @@ footer.append(footerDiv);
 container.append(footer);
 
 
-// function addToCart(id) {
-//     var numId = parseInt(id.match(/\d+/));
-//     cart.load();
-//     cart.add(numId);
-// }
-
 function isValid() {
     let inputs = document.getElementsByClassName("detailsInput");
 
