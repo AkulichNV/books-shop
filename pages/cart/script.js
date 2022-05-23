@@ -87,19 +87,11 @@ var cart = {
                 var title = document.createElement('div');
                 title.className = "title-author";
                 title.insertAdjacentHTML("beforeend", `<h3 class="title">${data[idNum].title}</h3>`);
-                title.insertAdjacentHTML("beforeend", `<h4 class="author">${data[idNum].author}</h4>`);
+                title.insertAdjacentHTML("beforeend", `<h4 class="author">by ${data[idNum].author}</h4>`);
                 itemDiv.append(title);
                 itemDiv.insertAdjacentHTML("beforeend", `<h2 class="price">$${data[idNum].price}</h2>`);
 
                 // QUANTITY
-
-                // <div class="quantity">
- {/* <form>
-   <div class="value-button" class="decrease" onclick="decreaseValue()" value="Decrease Value">-</div>
-     <input type="number" class="number" value="1" />
-   <div class="value-button" class="increase" onclick="increaseValue()" value="Increase Value">+</div>
- </form>
-</div> */}
                 var qtyDiv = document.createElement('div');
                 qtyDiv.className = "quantity";
 
@@ -167,11 +159,8 @@ var cart = {
                 cartDiv.appendChild(itemDiv);
             }
 
-            let sumDiv = document.createElement('div');
-            sumDiv.className = "total-sum";
-            sumDiv.innerHTML = "<h3>Total (" + sumOfValues(cart.items) + " items): $" + total + "</h3>";
-
-            cartDiv.appendChild(sumDiv);
+            let checkSumDiv = document.createElement('div');
+            checkSumDiv.className = "check-sum";
 
             // CHECKOUT BUTTONS
             let check = document.createElement("button");
@@ -179,7 +168,14 @@ var cart = {
             check.innerHTML = "Confirm order";
             check.addEventListener("click", cart.checkout);
             check.className = "c-checkout cart";
-            cartDiv.appendChild(check);
+            checkSumDiv.append(check);
+
+            // TOTAL SUM
+            let sumDiv = document.createElement('div');
+            sumDiv.className = "total-sum";
+            sumDiv.innerHTML = "<h3>Total (" + sumOfValues(cart.items) + " items): $" + total + "</h3>";
+            checkSumDiv.append(sumDiv);
+            cartDiv.appendChild(checkSumDiv);
         });
         }
       },
@@ -207,26 +203,6 @@ var cart = {
 
 };
 
-// let quantities = document.getElementsByClassName('quantity');
-// console.log(quantities);
-// for (let i=0; i<quantities.length; i++) {
-//     let q = quantities[i];
-//     let increaseElement = q.getElementsByClassName('increase')[0];
-//     let decreaseElement = q.getElementsByClassName('decrease')[0];
-//     increaseElement.addEventListener('click', increaseValue, false);
-//     decreaseElement.addEventListener('click', decreaseValue, false);
-
-//     function increaseValue() {
-//       var value = parseInt(q.getElementsByClassName('c-qty')[0].value, 10);
-//       value++;
-//       q.getElementsByClassName('c-qty')[0].value = value;
-//     }
-//     function decreaseValue() {
-//         var value = parseInt(q.getElementsByClassName('c-qty')[0].value, 10);
-//         value--;
-//         q.getElementsByClassName('c-qty')[0].value = value;
-//       }
-// }
 
 function sumOfValues(obj) {
     var n = Object.values(obj).reduce(function (previous, current) {
@@ -382,6 +358,7 @@ function updateValue(e) {
 }
 
 function postAlert() {
+    event.preventDefault();
     let inputs = document.getElementsByClassName("detailsInput");
     let arrData = [];
     for (let i=0; i< inputs.length; i++) {

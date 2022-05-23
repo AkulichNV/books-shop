@@ -298,3 +298,12 @@ document.body.append(container);
 //refactor!!
 cart.load();
 document.getElementById("itm-cnt").textContent = cart.count();
+
+// var search = document.getElementsByClassName("lens-search")[0].addEventListener('click', searchBook);
+
+// function searchBook(e)  {
+//     var searchText = document.getElementById("book-search").value;
+//     var titles = document.getElementsByClassName("title");
+//     var author = 
+//     console.log(titles[0].textContent);
+// }
