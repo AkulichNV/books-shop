@@ -40,7 +40,7 @@ let button = document.createElement('button');
     header.prepend(div1);
     container.prepend(header);
     // div3.insertAdjacentHTML("beforeend", `<img src="/books-shop/assets/icons/search.svg" alt="lens">`);
-    div3.insertAdjacentHTML("beforeend", `<a href= "/books-shop/pages/cart/index.html"><div class="widget"><p id="itm-cnt">0</p></div><img class="cart-header-img" src="/books-shop/assets/icons/shopping-cart.png" alt="cart"></a>`);
+    div3.insertAdjacentHTML("beforeend", `<a href= "/books-shop/pages/cart/index.html"><div class="widget"><p id="itm-cnt">0</p></div><img class="cart-header-img" ondragover="Window.allowDrop(event)" ondrop="Window.drop(event)" id="cart-img" src="/books-shop/assets/icons/shopping-cart.png" alt="cart"></a>`);
 
 // main block
     // home
@@ -91,6 +91,22 @@ mainSection.className = "container main-container";
 //     mainSection.prepend(sortingDiv);
     main.append(mainSection);
     
+
+Window.drag = function(ev) {
+    ev.dataTransfer.setData("id", ev.target.parentElement.id);
+}
+Window.allowDrop = function(ev) {
+    ev.preventDefault();
+  }
+  
+  Window.drop = function(ev) {
+    // console.log("drop");
+    ev.preventDefault();
+    var id = ev.dataTransfer.getData("id");
+    
+    addToCart(id);
+    // ev.target.appendChild(document.getElementById(data));
+  }
 
     // catalog
 let catalogDiv = document.createElement('div');
@@ -153,7 +169,7 @@ fetch('./books.json')
                 // itemDiv.setAttribute("onclick", showmodal(i));
                 // document.getElementById(`i-${i}`).onclick = showmodal(i);
                 itemDiv.insertAdjacentHTML("beforeend", `<div id=link-${i} class="show-more"><img class="img-eye" src="/books-shop/assets/icons/eye2.png" alt="show more"></div>`);
-                itemDiv.insertAdjacentHTML("beforeend", `<img class="cover" alt="cover" src=${data[i].imageLink}>`);
+                itemDiv.insertAdjacentHTML("beforeend", `<img id=img-${i} draggable="true" ondragstart="Window.drag(event)" class="cover" alt="cover" src=${data[i].imageLink}>`);
                 itemDiv.insertAdjacentHTML("beforeend", `<h3 class="title">${data[i].title}</h3>`);
                 itemDiv.insertAdjacentHTML("beforeend", `<h4 class="author">${data[i].author}</h4>`);
                 let priceCart = document.createElement('div');
@@ -185,7 +201,7 @@ fetch('./books.json')
                 let cartButton2 = document.createElement('button');
                 cartButton2.className = "add-to-cart";
                 cartButton2.innerHTML = "Add to Cart";
-                document.getElementById(`i-${i}`).getElementsByClassName('add-to-cart')[0].addEventListener("click", addToCart);
+                document.getElementById(`i-${i}`).getElementsByClassName('add-to-cart')[0].addEventListener("click", addToCartListener);
 
                 priceCart2.append(cartButton2);
 
@@ -212,24 +228,6 @@ fetch('./books.json')
             }
         });
 
-// function modal(id) {
-//     console.log('on ' + id)
-//     let el = document.getElementById(id);  // can also use a query selector
-//     let body = document.querySelector("body");
-//     let bg = document.createElement("div");
-//     bg.className = "modal-js-overlay";
-    
-//     // body.appendChild(bg);
-// }
-
-// function modaloff(id) {
-//     let body = document.querySelector("body");
-//     let el = document.querySelector(id);
-//     let overlay = body.querySelector(".modal-js-overlay");
-//     console.log('off ' + id)
-//     // el.classList.remove('on');
-//     // body.removeChild(overlay);
-// }
 
 function modalOnOff(id) {
     var numId = parseInt(id.match(/\d+/));
@@ -249,15 +247,9 @@ function modalOnOff(id) {
         popEl.classList.remove('on');
     });
     close.addEventListener('click', (e) => {
-        // let overlay = body.querySelector(".modal-js-overlay");
-        // let closebtn = parent.querySelector(".modal-js-close");
         
         popEl.classList.remove('on');
         body.removeChild(bg);
-        
-
-       
-        // popEl.removeChild(closebtn);
         
     });
 }
@@ -266,21 +258,17 @@ function showmodal()  {
     modalOnOff(this.id);
 }
 
-function addToCart() {
+function addToCartListener() {
     var idEl = this.parentElement.parentElement.id;
-    var numId = parseInt(idEl.match(/\d+/));
-    cart.load();
-    cart.add(idEl);
-    // var cart = localStorage.getItem("cart");
-    // console.log(crt);
-    // var cart = [];
-    
-    // cart.push(numId);
-    // localStorage.setItem("cart", cart);
-    
-
-    // console.log(cart);
+    addToCart(idEl);
 }
+
+function addToCart(id) {
+    var numId = parseInt(id.match(/\d+/));
+    cart.load();
+    cart.add(id);
+}
+
 
 mainSection.append(catalogDiv);
 
@@ -290,12 +278,8 @@ mainSection.append(catalogDiv);
 // footer
 let footer = document.createElement('footer');
 let footerSection = document.createElement('section');
-// let gitDiv = document.createElement('div');
-// let rssDiv = document.createElement('div');
 
 footerSection.className = "container footer-container";
-// gitDiv.className = "footer-data";
-// rssDiv.className = "footer-rss";
 
 footerSection.insertAdjacentHTML("afterbegin", `<p class="git-footer">@May 2022 <a href="https://github.com/AkulichNV">AkulichNV</a></p>`);
 footerSection.insertAdjacentHTML("beforeend", `<a href="https://rs.school/js-en/" target="_blank"><img class="img-footer" src="/books-shop/assets/icons/rs_school_js.png" alt="rsschool" ></a>`);
@@ -304,10 +288,6 @@ container.append(footer);
 
 document.body.append(container);
 
-// addEventListener('cart', event => { console.log(cart.items.length) });
-function onStorageEvent(storageEvent){
-
-    alert("storage event");
-}
-
-window.addEventListener('cart', onStorageEvent, false);
+//refactor!!
+cart.load();
+document.getElementById("itm-cnt").textContent = cart.count();
