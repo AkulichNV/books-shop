@@ -41,8 +41,8 @@ header {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    padding-top: 15px;
-    padding-bottom: 15px;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 .logo {
   display: flex;
@@ -50,7 +50,8 @@ header {
   gap: 20px;
 }
 .logo-img {
-  width: 60px;
+  width: 50px;
+  /* pointer-events: none; */
 }
 h1 {
   color: var(--color-dark);
@@ -131,7 +132,7 @@ h1 {
   margin: 0;
 }
 .cart-header-img {
-    width: 55px;
+    width: 50px;
     cursor: pointer;
 }
 

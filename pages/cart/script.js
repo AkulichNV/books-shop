@@ -33,33 +33,39 @@ var cart = {
             cart.items[id]++;
         }
         cart.save();
-        
-        console.log(id);
-        console.log(this.items);
     },
+
+    minus : function (id) {
+        cart.items[id]--;
+        if (cart.items[id] <= 0) {
+            delete cart.items[id];
+        }
+        cart.save();
+    },
+    
     list : function () {
-        // (D1) RESET
+        // RESET
         cartDiv.innerHTML = "";
         let empty = true;
         for (let key in cart.items) {
           if(cart.items.hasOwnProperty(key)) { empty = false; break; }
         }
     
-        // (D2) CART IS EMPTY
+        // CART IS EMPTY
         if (empty) {
           var item = document.createElement("div");
           item.innerHTML = "<h3>Your Cart is empty</h3><br><a href='/books-shop/pages/main/index.html'>Shop today's deals</a>";
           cartDiv.appendChild(item);
         }
     
-        // (D3) CART IS NOT EMPTY
+        // CART IS NOT EMPTY
         else {
           let total = 0, subtotal = 0;
 
           // CLEAR BUTTON
           let clear = document.createElement("input");
           clear.type = "button";
-          clear.value = "Clear your shopping cart";
+          clear.value = "Clear shopping cart";
           clear.addEventListener("click", cart.nuke);
           clear.className = "c-empty cart";
           cartDiv.appendChild(clear);
@@ -78,18 +84,64 @@ var cart = {
                 itemDiv.id = `p-${i}`;
 
                 itemDiv.insertAdjacentHTML("beforeend", `<img class="cover" alt="cover" src=${data[idNum].imageLink}>`);
-                itemDiv.insertAdjacentHTML("beforeend", `<h3 class="title">${data[idNum].title}</h3>`);
-                itemDiv.insertAdjacentHTML("beforeend", `<h4 class="author">${data[idNum].author}</h4>`);
+                var title = document.createElement('div');
+                title.className = "title-author";
+                title.insertAdjacentHTML("beforeend", `<h3 class="title">${data[idNum].title}</h3>`);
+                title.insertAdjacentHTML("beforeend", `<h4 class="author">by ${data[idNum].author}</h4>`);
+                itemDiv.append(title);
                 itemDiv.insertAdjacentHTML("beforeend", `<h2 class="price">$${data[idNum].price}</h2>`);
 
                 // QUANTITY
+                var qtyDiv = document.createElement('div');
+                qtyDiv.className = "quantity";
+
+                var decDiv = document.createElement('div');
+                decDiv.className = "value-btn decrease";
+                decDiv.setAttribute("value", "Decrease Value");
+                decDiv.innerHTML = "<p>-</p>";
+                decDiv.addEventListener("click", decreaseValue, false);
+
                 var qnty = document.createElement("input");
                 qnty.type = "number";
                 qnty.value = cart.items[id];
                 qnty.dataset.id = id;
                 qnty.className = "c-qty";
                 qnty.addEventListener("change", cart.change);
-                itemDiv.appendChild( qnty);
+
+                var incDiv = document.createElement('div');
+                incDiv.className = "value-btn increase";
+                incDiv.setAttribute("value", "Increase Value");
+                incDiv.innerHTML = "<p>+</p>";
+                incDiv.addEventListener("click", increaseValue, false);
+
+                qtyDiv.append(decDiv);
+                qtyDiv.append(qnty);
+                qtyDiv.append(incDiv);
+                itemDiv.appendChild( qtyDiv);
+                
+                // Increase Value // 
+                function increaseValue() {
+                    var value = parseInt(document.getElementsByClassName('c-qty')[i].value, 10);
+                    value = isNaN(value) ? 1 : value;
+                    value++;
+                    document.getElementsByClassName('c-qty')[i].value = value;
+                    var id = document.getElementsByClassName('c-qty')[i].dataset.id;
+                    cart.add(id);
+                    cart.list();
+                }
+                
+                // Decrease Value // 
+                function decreaseValue() {
+                    var value = parseInt(document.getElementsByClassName('c-qty')[i].value, 10);
+                    value = isNaN(value) ? 0 : value;
+                    value < 1 ? value = 1 : '';
+                    value--;
+                    document.getElementsByClassName('c-qty')[i].value = value;
+                    var id = document.getElementsByClassName('c-qty')[i].dataset.id;
+                    cart.minus(id);
+                    cart.list();
+                }  
+                
 
                 // REMOVE
                 var del = document.createElement("input");
@@ -107,11 +159,8 @@ var cart = {
                 cartDiv.appendChild(itemDiv);
             }
 
-            let sumDiv = document.createElement('div');
-            sumDiv.className = "total-sum";
-            sumDiv.innerHTML = "<h3>Total (" + sumOfValues(cart.items) + " items): $" + total + "</h3>";
-
-            cartDiv.appendChild(sumDiv);
+            let checkSumDiv = document.createElement('div');
+            checkSumDiv.className = "check-sum";
 
             // CHECKOUT BUTTONS
             let check = document.createElement("button");
@@ -119,7 +168,14 @@ var cart = {
             check.innerHTML = "Confirm order";
             check.addEventListener("click", cart.checkout);
             check.className = "c-checkout cart";
-            cartDiv.appendChild(check);
+            checkSumDiv.append(check);
+
+            // TOTAL SUM
+            let sumDiv = document.createElement('div');
+            sumDiv.className = "total-sum";
+            sumDiv.innerHTML = "<h3>Total (" + sumOfValues(cart.items) + " items): $" + total + "</h3>";
+            checkSumDiv.append(sumDiv);
+            cartDiv.appendChild(checkSumDiv);
         });
         }
       },
@@ -146,6 +202,7 @@ var cart = {
       }
 
 };
+
 
 function sumOfValues(obj) {
     var n = Object.values(obj).reduce(function (previous, current) {
@@ -200,7 +257,7 @@ let input = document.createElement('input');
 input.id = "book-search";
 input.setAttribute("type", "search");
 input.setAttribute("name", "search");
-input.setAttribute("placeholder", "Book or Author Name...");
+input.setAttribute("placeholder", "Will be up and running soon...");
 
 let button = document.createElement('button');
 button.className = "lens-search";
@@ -268,7 +325,6 @@ footer.append(footerDiv);
 container.append(footer);
 
 
-
 function isValid() {
     let inputs = document.getElementsByClassName("detailsInput");
 
@@ -296,6 +352,7 @@ function updateValue(e) {
 }
 
 function postAlert() {
+    event.preventDefault();
     let inputs = document.getElementsByClassName("detailsInput");
     let arrData = [];
     for (let i=0; i< inputs.length; i++) {

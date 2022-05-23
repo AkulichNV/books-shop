@@ -17,6 +17,7 @@
     <div class="order-form">
     <form>
         <h3>Order Form</h3>
+        <div>
         <p>
             <label for="t1">Name<abbr title="This field is mandatory" aria-label="required">*</abbr></label>
             <input type="text" class="detailsInput" id="t1" name="name" required  minlength="5" pattern="[a-zA-Z]+">
@@ -25,6 +26,7 @@
             <label for="t2">Surname<abbr title="This field is mandatory" aria-label="required">*</abbr></label>
             <input type="text" class="detailsInput" id="t2" name="surname" required  minlength="4" pattern="[a-zA-Z]+">
         </p>
+    
         <p>
             <label for="t3">Delivery<abbr title="This field is mandatory" aria-label="required">*</abbr></label>
             <input type="date" class="detailsInput" id="t3" name="delivery" required>
@@ -41,6 +43,7 @@
             <label for="t6">Flat number<abbr title="This field is mandatory" aria-label="required">*</abbr></label>
             <input type="text" class="detailsInput" id="t6" name="flat" required pattern="[1-9][0-9]*(-[1-9][0-9]*)*">
         </p>
+    </div>
         <p>
           <fieldset>
             <legend>Choose the payment type<abbr title="This field is mandatory" aria-label="required">*</abbr></legend>
