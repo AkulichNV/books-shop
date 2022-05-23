@@ -24,7 +24,7 @@ let button = document.createElement('button');
     input.id = "book-search";
     input.setAttribute("type", "search");
     input.setAttribute("name", "search");
-    input.setAttribute("placeholder", "Book or Author Name...");
+    input.setAttribute("placeholder", "Will be up and running soon...");
 
     button.className = "lens-search";
     button.setAttribute("type", "submit");
@@ -307,3 +307,8 @@ document.getElementById("itm-cnt").textContent = cart.count();
 //     var author = 
 //     console.log(titles[0].textContent);
 // }
+
+// var booksTitle = document.getElementsByClassName('title');
+
+// console.log(booksTitle);
+// var booksAuthor = document.getElementsByClassName("author");

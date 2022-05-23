@@ -257,7 +257,7 @@ let input = document.createElement('input');
 input.id = "book-search";
 input.setAttribute("type", "search");
 input.setAttribute("name", "search");
-input.setAttribute("placeholder", "Book or Author Name...");
+input.setAttribute("placeholder", "Will be up and running soon...");
 
 let button = document.createElement('button');
 button.className = "lens-search";
