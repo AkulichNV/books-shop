@@ -273,7 +273,7 @@ function addToCartListener() {
 function addToCart(id) {
     var numId = parseInt(id.match(/\d+/));
     cart.load();
-    cart.add(id);
+    cart.add(numId);
 }
 
 

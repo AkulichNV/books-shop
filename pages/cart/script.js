@@ -33,10 +33,16 @@ var cart = {
             cart.items[id]++;
         }
         cart.save();
-        
-        console.log(id);
-        console.log(this.items);
     },
+
+    minus : function (id) {
+        cart.items[id]--;
+        if (cart.items[id] <= 0) {
+            delete cart.items[id];
+        }
+        cart.save();
+    },
+    
     list : function () {
         // RESET
         cartDiv.innerHTML = "";
@@ -78,18 +84,72 @@ var cart = {
                 itemDiv.id = `p-${i}`;
 
                 itemDiv.insertAdjacentHTML("beforeend", `<img class="cover" alt="cover" src=${data[idNum].imageLink}>`);
-                itemDiv.insertAdjacentHTML("beforeend", `<h3 class="title">${data[idNum].title}</h3>`);
-                itemDiv.insertAdjacentHTML("beforeend", `<h4 class="author">${data[idNum].author}</h4>`);
+                var title = document.createElement('div');
+                title.className = "title-author";
+                title.insertAdjacentHTML("beforeend", `<h3 class="title">${data[idNum].title}</h3>`);
+                title.insertAdjacentHTML("beforeend", `<h4 class="author">${data[idNum].author}</h4>`);
+                itemDiv.append(title);
                 itemDiv.insertAdjacentHTML("beforeend", `<h2 class="price">$${data[idNum].price}</h2>`);
 
                 // QUANTITY
+
+                // <div class="quantity">
+ {/* <form>
+   <div class="value-button" class="decrease" onclick="decreaseValue()" value="Decrease Value">-</div>
+     <input type="number" class="number" value="1" />
+   <div class="value-button" class="increase" onclick="increaseValue()" value="Increase Value">+</div>
+ </form>
+</div> */}
+                var qtyDiv = document.createElement('div');
+                qtyDiv.className = "quantity";
+
+                var decDiv = document.createElement('div');
+                decDiv.className = "value-btn decrease";
+                decDiv.setAttribute("value", "Decrease Value");
+                decDiv.innerHTML = "<p>-</p>";
+                decDiv.addEventListener("click", decreaseValue, false);
+
                 var qnty = document.createElement("input");
                 qnty.type = "number";
                 qnty.value = cart.items[id];
                 qnty.dataset.id = id;
                 qnty.className = "c-qty";
                 qnty.addEventListener("change", cart.change);
-                itemDiv.appendChild( qnty);
+
+                var incDiv = document.createElement('div');
+                incDiv.className = "value-btn increase";
+                incDiv.setAttribute("value", "Increase Value");
+                incDiv.innerHTML = "<p>+</p>";
+                incDiv.addEventListener("click", increaseValue, false);
+
+                qtyDiv.append(decDiv);
+                qtyDiv.append(qnty);
+                qtyDiv.append(incDiv);
+                itemDiv.appendChild( qtyDiv);
+                
+                // Increase Value // 
+                function increaseValue() {
+                    var value = parseInt(document.getElementsByClassName('c-qty')[i].value, 10);
+                    value = isNaN(value) ? 1 : value;
+                    value++;
+                    document.getElementsByClassName('c-qty')[i].value = value;
+                    var id = document.getElementsByClassName('c-qty')[i].dataset.id;
+                    cart.add(id);
+                    cart.list();
+                }
+                
+                // Decrease Value // 
+                function decreaseValue() {
+                    var value = parseInt(document.getElementsByClassName('c-qty')[i].value, 10);
+                    value = isNaN(value) ? 0 : value;
+                    value < 1 ? value = 1 : '';
+                    value--;
+                    document.getElementsByClassName('c-qty')[i].value = value;
+                    var id = document.getElementsByClassName('c-qty')[i].dataset.id;
+                    cart.minus(id);
+                    cart.list();
+                }  
+                
 
                 // REMOVE
                 var del = document.createElement("input");
@@ -146,6 +206,27 @@ var cart = {
       }
 
 };
+
+// let quantities = document.getElementsByClassName('quantity');
+// console.log(quantities);
+// for (let i=0; i<quantities.length; i++) {
+//     let q = quantities[i];
+//     let increaseElement = q.getElementsByClassName('increase')[0];
+//     let decreaseElement = q.getElementsByClassName('decrease')[0];
+//     increaseElement.addEventListener('click', increaseValue, false);
+//     decreaseElement.addEventListener('click', decreaseValue, false);
+
+//     function increaseValue() {
+//       var value = parseInt(q.getElementsByClassName('c-qty')[0].value, 10);
+//       value++;
+//       q.getElementsByClassName('c-qty')[0].value = value;
+//     }
+//     function decreaseValue() {
+//         var value = parseInt(q.getElementsByClassName('c-qty')[0].value, 10);
+//         value--;
+//         q.getElementsByClassName('c-qty')[0].value = value;
+//       }
+// }
 
 function sumOfValues(obj) {
     var n = Object.values(obj).reduce(function (previous, current) {
@@ -268,6 +349,11 @@ footer.append(footerDiv);
 container.append(footer);
 
 
+// function addToCart(id) {
+//     var numId = parseInt(id.match(/\d+/));
+//     cart.load();
+//     cart.add(numId);
+// }
 
 function isValid() {
     let inputs = document.getElementsByClassName("detailsInput");

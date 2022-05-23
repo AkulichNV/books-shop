@@ -21,6 +21,7 @@
     position: relative;
     overflow-x: hidden;
     margin: 0;
+    color: var(--color-dark);
     }
 .body-container { 
     display:flex; 
@@ -126,6 +127,19 @@ h2 {
     box-shadow: 0 6px 8px var(--color-primary-dark);
     margin: 15px 0;
   }
+
+.item {
+    border-bottom: 1px solid var(--color-primary);
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 20px;
+}
+.cover {
+    width: 100px;
+}
+.title-author {
+    width: 350px;
+}
 
 
 
