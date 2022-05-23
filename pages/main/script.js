@@ -90,28 +90,35 @@ mainSection.className = "container main-container";
 //     sortingDiv.insertAdjacentHTML("afterbegin", `<span><strong>Sort by:</strong></span>`);
 //     mainSection.prepend(sortingDiv);
     main.append(mainSection);
+ 
+    function hasClass(str, search) {
+        return !!(str.search('\\b' +  search + '\\b') + 1);
+    }
     
 
 Window.drag = function(ev) {
-    ev.dataTransfer.setData("id", ev.target.parentElement.id);
+        ev.dataTransfer.setData("id", ev.target.id);
 }
 Window.allowDrop = function(ev) {
     ev.preventDefault();
   }
   
   Window.drop = function(ev) {
-    // console.log("drop");
     ev.preventDefault();
     var id = ev.dataTransfer.getData("id");
-    
-    addToCart(id);
-    // ev.target.appendChild(document.getElementById(data));
+    var elem = document.getElementById(id);
+    if (!elem) {
+        return;
+    }
+    if (elem.className === 'cover') {
+        addToCart(id);
+    }
   }
 
     // catalog
 let catalogDiv = document.createElement('div');
 catalogDiv.className = "catalog-items";
-// localStorage.removeItem("cart");
+
 var cart = {
     items : {}, // Current items in cart
 

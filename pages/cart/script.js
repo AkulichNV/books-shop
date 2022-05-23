@@ -38,28 +38,28 @@ var cart = {
         console.log(this.items);
     },
     list : function () {
-        // (D1) RESET
+        // RESET
         cartDiv.innerHTML = "";
         let empty = true;
         for (let key in cart.items) {
           if(cart.items.hasOwnProperty(key)) { empty = false; break; }
         }
     
-        // (D2) CART IS EMPTY
+        // CART IS EMPTY
         if (empty) {
           var item = document.createElement("div");
           item.innerHTML = "<h3>Your Cart is empty</h3><br><a href='/books-shop/pages/main/index.html'>Shop today's deals</a>";
           cartDiv.appendChild(item);
         }
     
-        // (D3) CART IS NOT EMPTY
+        // CART IS NOT EMPTY
         else {
           let total = 0, subtotal = 0;
 
           // CLEAR BUTTON
           let clear = document.createElement("input");
           clear.type = "button";
-          clear.value = "Clear your shopping cart";
+          clear.value = "Clear shopping cart";
           clear.addEventListener("click", cart.nuke);
           clear.className = "c-empty cart";
           cartDiv.appendChild(clear);
