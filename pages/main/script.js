@@ -39,8 +39,8 @@ let button = document.createElement('button');
     navDiv.append(div3);
     header.prepend(div1);
     container.prepend(header);
-    // button.insertAdjacentHTML("beforeend", `<img src="/books-shop/assets/icons/search.svg" alt="lens">`);
-    div3.insertAdjacentHTML("beforeend", `<a href= "/books-shop/pages/cart/index.html"><img class="cart-header-img" src="/books-shop/assets/icons/shopping-cart.png" alt="cart"></a>`);
+    // div3.insertAdjacentHTML("beforeend", `<img src="/books-shop/assets/icons/search.svg" alt="lens">`);
+    div3.insertAdjacentHTML("beforeend", `<a href= "/books-shop/pages/cart/index.html"><div class="widget"><p id="itm-cnt">0</p></div><img class="cart-header-img" src="/books-shop/assets/icons/shopping-cart.png" alt="cart"></a>`);
 
 // main block
     // home
@@ -125,8 +125,17 @@ var cart = {
         }
         cart.save();
         
-        console.log(id);
-        console.log(this.items);
+        // console.log(id);
+        // console.log(this.items);
+        document.getElementById("itm-cnt").textContent = cart.count();
+
+    },
+    
+    count : function () {
+        var n = Object.values(cart.items).reduce(function (previous, current) {
+            return previous + Number(current);
+        }, 0);
+        return n;
     }
 };
 // cart.nuke();
@@ -294,3 +303,11 @@ footer.append(footerSection);
 container.append(footer);
 
 document.body.append(container);
+
+// addEventListener('cart', event => { console.log(cart.items.length) });
+function onStorageEvent(storageEvent){
+
+    alert("storage event");
+}
+
+window.addEventListener('cart', onStorageEvent, false);
