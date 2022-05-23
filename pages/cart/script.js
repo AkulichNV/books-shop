@@ -14,12 +14,16 @@ var cart = {
 
     nuke : function () {
         if (confirm("Empty cart?")) {
-          cart.items = {};
-          localStorage.removeItem("cart");
-          cart.list();
+          cart.purge();
         }
         
       },
+
+    purge : function () {
+        cart.items = {};
+        localStorage.removeItem("cart");
+        cart.list();
+    },
 
     add : function (id) {
         
@@ -138,6 +142,7 @@ var cart = {
         // AAPEAR ORDER FORM
         document.getElementsByClassName("order-form")[0].style.display = "block";
         document.getElementsByClassName("c-checkout")[0].style.display = "none";
+        addEv();
       }
 
 };
@@ -264,15 +269,11 @@ container.append(footer);
 
 
 
-
 function isValid() {
     let inputs = document.getElementsByClassName("detailsInput");
 
     for (let i=0; i< inputs.length; i++) {
         let elem = inputs[i];
-        // console.log(elem);
-        // console.log(elem.validity);
-        // console.log(elem.validity.valid);
         if (elem.validity.valid == false) {
             return false;
         }
@@ -283,19 +284,16 @@ function isValid() {
 const inputs = document.getElementsByClassName("detailsInput");
 
 function addEv() {
+    updateValue();
     for (let i=0; i< inputs.length; i++) {
         inputs[i].addEventListener('change', updateValue);
     }
 }
 addEv();
-updateValue();
 
 function updateValue(e) {
-    // console.log(isValid());
     completeBtn.disabled = !isValid();
 }
-
-
 
 function postAlert() {
     let inputs = document.getElementsByClassName("detailsInput");
@@ -306,26 +304,14 @@ function postAlert() {
         arrData.push(elem.value);
     }
     var post = `The order created!\nThe delivery will be carried out on ${arrData[2]} at the address of ${arrData[3]} street, house ${arrData[4]} flat ${arrData[5]}. Customer ${arrData[0]} ${arrData[1]}.\nHave a nice day!`
-    // alert(post);
-    // cart.nuke;
+
     if(confirm(post)) {
-        cart.nuke;
+        cart.purge();
+        window.location.replace("/books-shop/pages/main/index.html");
     }
     
 }
 
-
 completeBtn.addEventListener("click", postAlert); 
-
-
-
-
-
-
-
-
-
-
-
 
 document.body.append(container);
